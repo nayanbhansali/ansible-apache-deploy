@@ -1,0 +1,24 @@
+---
+- name: Install and configure Apache Web Server
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Update the apt package index
+      apt:
+        update_cache: yes
+
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    - name: Start Apache2 service
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    - name: Allow Apache through UFW
+      ufw:
+        rule: allow
+        name: 'Apache'
